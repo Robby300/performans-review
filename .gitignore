@@ -1,0 +1,8 @@
+# Project exclude paths
+/out/
+/target/classes/
+/target/work/plugin-build-classes/
+/target/work/plugin-classes/
+/target/work/resources/
+/target/work/scriptCache/
+/target/work/stubs/

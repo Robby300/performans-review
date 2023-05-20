@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired
 
 class AnimalTest extends IntegrationSpec {
 
+    // внедряю из контекста коллекцию всех реализаций абстракции Animal
     @Autowired
     Collection<Animal> animals
 
@@ -15,6 +16,7 @@ class AnimalTest extends IntegrationSpec {
         animals.each {it.move()}
     }
 
+    // внедряю из контекста коллекцию всех реализаций интерфейса flyable
     @Autowired
     Collection<Flyable> flyableAnimals
 
@@ -24,6 +26,7 @@ class AnimalTest extends IntegrationSpec {
         flyableAnimals.each {it.fly()}
     }
 
+    // внедряю из контекста коллекцию всех реализаций интерфейса underWaterBreathable
     @Autowired
     Collection<UnderWaterBreathable> underWaterBreathableAnimals
 
@@ -31,5 +34,15 @@ class AnimalTest extends IntegrationSpec {
         expect:
         underWaterBreathableAnimals.size() == 3
         underWaterBreathableAnimals.each {it.breathUnderWater()}
+    }
+
+    // внедряю из контекста коллекцию всех реализаций интерфейса underWaterBreathable
+    @Autowired
+    Collection<Swimable> swimableAnimals
+
+    void allSwimableAnimalseShouldSwim() {
+        expect:
+        swimableAnimals.size() == 3
+        swimableAnimals.each {it.swim()}
     }
 }

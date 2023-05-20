@@ -9,7 +9,6 @@ class Employee {
     static constraints = {
         firstName blank: false
         lastName blank: false
-//        salary min: 0
         position nullable: true
     }
 }

@@ -2,6 +2,7 @@ import question12.impl.Bat
 import question12.impl.Bird
 import question12.impl.Fish
 import question12.impl.Octopus
+import question12.impl.SwimableBird
 
 // Place your Spring DSL code here
 beans = {
@@ -33,7 +34,7 @@ beans = {
         isHealthy = true
     }
 
-    donaldDuck(Bird) {
+    donaldDuck(SwimableBird) {
         name = "DonaldDuck"
         weight = 3.5
         age = 4
