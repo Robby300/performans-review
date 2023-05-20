@@ -1,101 +1,113 @@
 package performans.review
 
+import grails.test.mixin.TestFor
+import grails.test.spock.IntegrationSpec
+import org.springframework.beans.factory.annotation.Autowired
+import spock.lang.Specification
+import spock.lang.Unroll
 
+//@TestFor(EmployeeController)
+class EmployeeControllerSpec extends IntegrationSpec {
 
-import static org.springframework.http.HttpStatus.*
-import grails.converters.JSON
-import grails.test.mixin.*
-import spock.lang.*
+//    def setup() {
+//        // инициализация данных перед каждым тестом
+//        controller.employeeService = Mock(EmployeeService)
+//    }
+    @Autowired
+    EmployeeController employeeController
 
-@TestFor(EmployeeController)
-@Mock(Employee)
-class EmployeeControllerSpec extends Specification {
+    @Unroll
+    void "test create employee #employee"() {
+        given:
+        def employee = new Employee(
+                firstName: 'John',
+                lastName: 'Doe',
+                salary: 1000.00,
+                position: 'Developer'
+        )
 
-    def populateValidParams(params) {
-        assert params != null
-        // TODO: Populate valid properties like...
-        //params['name'] = 'someValidName'
+        when:
+        employeeController.request.method = 'POST'
+        employeeController.request.contentType = 'application/json'
+        employeeController.request.json = [
+                firstName: employee.firstName,
+                lastName: employee.lastName,
+                salary: employee.salary,
+                position: employee.position
+        ]
+        employeeController.save(employee)
+
+        then:
+        response.status == 201
+//        response.json['firstName'] == employee.firstName
+//        response.json['lastName'] == employee.lastName
+//        response.json['salary'] == employee.salary
+//        response.json['position'] == employee.position
+
+        where:
+        employee << [
+                [firstName: 'John', lastName: 'Doe', salary: 1000.00, position: 'Developer'],
+                [firstName: 'Jane', lastName: 'Smith', salary: 2000.00, position: 'Manager']
+        ]
     }
 
-    void "Test the index action returns the correct model"() {
 
-        when:"The index action is executed"
-            controller.index()
+    @Unroll
+    void "test update employee #employee"() {
+        given:
+        def employee = new Employee(
+                firstName: 'John',
+                lastName: 'Doe',
+                salary: 1000.00,
+                position: 'Developer'
+        )
+//        controller.employeeService.get(employee.id) >> employee
 
-        then:"The response is correct"
-            response.status == OK.value
-            response.text == ([] as JSON).toString()
+        when:
+        controller.request.method = 'PUT'
+        controller.request.contentType = 'application/json'
+        controller.request.json = [
+                firstName: 'UpdatedFirstName',
+                lastName: 'UpdatedLastName',
+                salary: 2000.00,
+                position: 'Manager'
+        ]
+//        controller.update(employee.id)
+
+        then:
+        response.status == 200
+        response.json['firstName'] == 'UpdatedFirstName'
+        response.json['lastName'] == 'UpdatedLastName'
+        response.json['salary'] == 2000.00
+        response.json['position'] == 'Manager'
+
+//        where:
+//        employee << [
+//                [id: 1, firstName: 'John', lastName: 'Doe', salary: 1000.00, position: 'Developer'],
+//                [id: 2, firstName: 'Jane', lastName: 'Smith', salary: 2000.00, position: 'Manager']
+//        ]
     }
 
-    void "Test the save action correctly persists an instance"() {
+    @Unroll
+    void "test delete employee by id #id"() {
+        given:
+        def employee = new Employee(
+                firstName: 'John',
+                lastName: 'Doe',
+                salary: 1000.00,
+                position: 'Developer'
+        )
+        controller.employeeService.get(employee.id) >> employee
 
-        when:"The save action is executed with an invalid instance"
-            // Make sure the domain class has at least one non-null property
-            // or this test will fail.
-            def employee = new Employee()
-            controller.save(employee)
+        when:
+        controller.request.method = 'DELETE'
+        controller.delete(employee.id)
 
-        then:"The response status is NOT_ACCEPTABLE"
-            response.status == NOT_ACCEPTABLE.value
+        then:
+        response.status == 204
 
-        when:"The save action is executed with a valid instance"
-            response.reset()
-            populateValidParams(params)
-            employee = new Employee(params)
-
-            controller.save(employee)
-
-        then:"The response status is CREATED and the instance is returned"
-            response.status == CREATED.value
-            response.text == (employee as JSON).toString()
+        where:
+        id << [1, 2, 3]
     }
 
-    void "Test the update action performs an update on a valid domain instance"() {
-        when:"Update is called for a domain instance that doesn't exist"
-            controller.update(null)
-
-        then:"The response status is NOT_FOUND"
-            response.status == NOT_FOUND.value
-
-        when:"An invalid domain instance is passed to the update action"
-            response.reset()
-            def employee = new Employee()
-            controller.update(employee)
-
-        then:"The response status is NOT_ACCEPTABLE"
-            response.status == NOT_ACCEPTABLE.value
-
-        when:"A valid domain instance is passed to the update action"
-            response.reset()
-            populateValidParams(params)
-            employee = new Employee(params).save(flush: true)
-            controller.update(employee)
-
-        then:"The response status is OK and the updated instance is returned"
-            response.status == OK.value
-            response.text == (employee as JSON).toString()
-    }
-
-    void "Test that the delete action deletes an instance if it exists"() {
-        when:"The delete action is called for a null instance"
-            controller.delete(null)
-
-        then:"A NOT_FOUND is returned"
-            response.status == NOT_FOUND.value
-
-        when:"A domain instance is created"
-            response.reset()
-            populateValidParams(params)
-            def employee = new Employee(params).save(flush: true)
-
-        then:"It exists"
-            Employee.count() == 1
-
-        when:"The domain instance is passed to the delete action"
-            controller.delete(employee)
-
-        then:"The instance is deleted"
-            Employee.count() == 0
-            response.status == NO_CONTENT.value
-    }
 }

@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-  <testsuite errors="0" failures="0" hostname="isfront-dev" id="0" name="CollectEntriesTest" package="question412" skipped="0" tests="1" time="0.128" timestamp="2023-05-20T17:34:56">
+  <testsuite errors="0" failures="0" hostname="isfront-dev" id="0" name="EmployeeControllerSpec" package="performans.review" skipped="0" tests="0" time="0.013" timestamp="2023-05-20T19:39:59">
       <properties />
 
-      <testcase classname="question412.CollectEntriesTest" name="collectFromTwoListsUsingFor" time="0.12" />
+      <testcase classname="junit.framework.JUnit4TestCaseFacade" name="performans.review.EmployeeControllerSpec" time="0.0">
+          <error message="Could not find ApplicationContext, configure Grails correctly first" type="java.lang.IllegalStateException">java.lang.IllegalStateException: Could not find ApplicationContext, configure Grails correctly first
+	at grails.util.Holders.getApplicationContext(Holders.java:97)
+	at grails.test.spock.IntegrationSpec.$spock_initializeSharedFields(IntegrationSpec.groovy:41)
+</error>
 
-      <system-out><![CDATA[--Output from collectFromTwoListsUsingFor--
-[1:one, 2:two, 3:three]
-]]></system-out>
+      </testcase>
 
-      <system-err><![CDATA[--Output from collectFromTwoListsUsingFor--
-]]></system-err>
+      <system-out><![CDATA[]]></system-out>
+
+      <system-err><![CDATA[]]></system-err>
 
   </testsuite>
 </testsuites>

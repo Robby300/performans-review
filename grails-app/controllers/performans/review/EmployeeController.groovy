@@ -8,12 +8,12 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class EmployeeController {
 
+    def employeeService
     static responseFormats = ['json', 'xml']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Employee.list(params), [status: OK]
+    def index() {
+        respond employeeService.getAll(), [status: OK]
     }
 
     @Transactional
@@ -28,9 +28,7 @@ class EmployeeController {
             render status: NOT_ACCEPTABLE
             return
         }
-
-        employeeInstance.save flush:true
-        respond employeeInstance, [status: CREATED]
+        respond employeeService.save(employeeInstance), [status: CREATED]
     }
 
     @Transactional
@@ -45,9 +43,7 @@ class EmployeeController {
             render status: NOT_ACCEPTABLE
             return
         }
-
-        employeeInstance.save flush:true
-        respond employeeInstance, [status: OK]
+        respond employeeService.save(employeeInstance), [status: OK]
     }
 
     @Transactional
@@ -58,7 +54,7 @@ class EmployeeController {
             return
         }
 
-        employeeInstance.delete flush:true
+        employeeService.delete(employeeInstance)
         render status: NO_CONTENT
     }
 }
