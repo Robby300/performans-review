@@ -45,7 +45,7 @@ class FindInStreamTest extends IntegrationSpec {
     }
 
     // не находим по предикату ничего
-    void shouldNotFindFisrtTest() {
+    void shouldNotFindAnyTest() {
         when:
         def firstFound = animals
                 .stream()

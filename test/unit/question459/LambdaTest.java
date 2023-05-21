@@ -3,13 +3,11 @@ package question459;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
+import java.util.*;
+import java.util.function.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -24,17 +22,20 @@ public class LambdaTest {
         numbers.add(1);
     }
 
+    // функциональный интерфейс Consumer<T> как безымянный класс
     @Test
     public void lambdaTest() {
-        numbers.forEach( number -> System.out.println(number) );
+        numbers.forEach(System.out::println);
     }
 
+    // функциональный интерфейс Consumer<T>
     @Test
     public void lambdaTest2() {
-        Consumer<Integer> method = number -> { System.out.println(number); };
-        numbers.forEach( method );
+        Consumer<Integer> consumer = System.out::println;
+        numbers.forEach(consumer);
     }
 
+    // функциональный интерфейс предикат
     @Test
     public void lambdaTest3() {
         Predicate<Integer> evenPredicate = (number -> number % 2 == 0);
@@ -43,6 +44,7 @@ public class LambdaTest {
         assertEquals(collect.size(), 1);
     }
 
+    // функциональный интерфейс комапаратор
     @Test
     public void lambdaTest4() {
         System.out.println("test #4");
@@ -50,6 +52,51 @@ public class LambdaTest {
         numbers.stream().sorted(reversOrder).forEach(System.out::println);
     }
 
+    // бинарный оператор в reduce
+    @Test
+    public void binaryOperatorTest() {
+        BinaryOperator<Integer> multiply = (x, y) -> x * y;
+        Integer reduce = numbers.stream()
+                .reduce(1, multiply);
+        assertEquals(new Integer(360), reduce);
+    }
+
+    // унарный оператор
+    @Test
+    public void unaryOperatorTest() {
+        UnaryOperator<Integer> square = x -> x * x;
+        List<Integer> collect = numbers.stream()
+                .map(square)
+                .collect(Collectors.toList());
+    }
+
+    // функция
+    @Test
+    public void functionTest() {
+        Function<Integer, Double> divideByTwo = x -> x * 0.5;
+        List<Double> collect = numbers.stream()
+                .map(divideByTwo)
+                .collect(Collectors.toList());
+    }
+
+    // поставщик supplier
+    @Test
+    public void supplierTest() {
+        Supplier<Integer> randomInt = ()-> {
+//            Scanner in = new Scanner(System.in);
+//            System.out.println("Введите целое число: ");
+//            Integer number = in.nextInt();
+//            return number;
+            Random random = new Random();
+            return random.nextInt();
+        };
+        List<Integer> collect = Stream.generate(randomInt)
+                .limit(5)
+                .collect(Collectors.toList());
+        assertEquals(5, collect.size());
+    }
+
+    // реализация Runable через лямбду
     @Test
     public void lambdaTest5() {
         Runnable runnable = () -> {

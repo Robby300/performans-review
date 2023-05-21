@@ -4,6 +4,7 @@ import grails.test.spock.IntegrationSpec
 import org.springframework.beans.factory.annotation.Autowired
 import question12.Animal
 
+import java.util.function.ToDoubleFunction
 import java.util.stream.Collectors
 
 class StreamTest extends IntegrationSpec {
@@ -52,5 +53,14 @@ class StreamTest extends IntegrationSpec {
         collect.forEach({println("$it.name --- $it.age")})
         expect:
         collect.size() == 6
+    }
+
+    void reduceTest() {
+        when:
+        def sumWeight = animals.stream()
+                .map({ it.getWeight() })
+                .reduce(0, Double.&sum)
+        then:
+        sumWeight == 116.6
     }
 }
