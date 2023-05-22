@@ -13,6 +13,7 @@ class StreamTest extends IntegrationSpec {
     Collection<Animal> animals
 
     void conversionToList() {
+        // конверсия в лист String
         def collect = animals
                 .stream()
                 .map({ animal -> animal.getName() })
@@ -28,6 +29,7 @@ class StreamTest extends IntegrationSpec {
     }
 
     void conversionToSet() {
+        // конверсия в сет
         def collect = animals
                 .stream()
                 .collect(Collectors.toSet())
@@ -36,6 +38,7 @@ class StreamTest extends IntegrationSpec {
     }
 
     void conversionToMap() {
+        // конверсия в маппу через группировку по возрасту
         def collect = animals
                 .stream()
                 .collect(Collectors.groupingBy({ it.getAge() }))

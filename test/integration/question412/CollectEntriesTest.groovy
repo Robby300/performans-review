@@ -11,7 +11,7 @@ class CollectEntriesTest extends IntegrationSpec{
     List<Animal> animals
 
     void entriesTest() {
-
+        // собираю маппу имя - возраст через collectEntries и кложуру
         when:
         def ageByName = animals.collectEntries({[it.name, it.age]})
         ageByName.each {key, value -> println("ageByName: name = $key and his age = $value")}
@@ -22,6 +22,7 @@ class CollectEntriesTest extends IntegrationSpec{
     }
 
     void entriesTestWithCollect() {
+        // собираю маппу имя - здоров через коллекцию entry и collectEntries
         when:
         def collectHealthByAnimal = animals.collect({ [it, it.isHealthy] })
         def healthByAnimal = collectHealthByAnimal.collectEntries()
@@ -33,9 +34,9 @@ class CollectEntriesTest extends IntegrationSpec{
     }
 
     void thirdTest() {
+        // собираю маппу из коллекции через индексы в range
         when:
         def letters = "abc"
-        // collect letters with index
 
         then:
         (0..2).collectEntries( [:] ) { index -> [index, letters[index]] } == [0:'a', 1:'b', 2:'c']
@@ -44,6 +45,7 @@ class CollectEntriesTest extends IntegrationSpec{
     }
 
     void collectFromTwoLists() {
+        // собираю маппу из двух коллекций
         when:
         def keys = [1, 2, 3]
         def values = ['one', 'two', 'three']
@@ -55,6 +57,7 @@ class CollectEntriesTest extends IntegrationSpec{
     }
 
     void collectFromTwoListsUsingFor() {
+        // собираю маппу из двух коллекций через for
         when:
         def keys = [1, 2, 3]
         def values = ['one', 'two', 'three']

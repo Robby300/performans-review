@@ -5,14 +5,16 @@ import spock.lang.Specification
 class ValueRangesTest extends Specification {
 
     void rangesTest() {
-        def list = [123, "some text", new Date()]
+        // диапазон строк
         def letters = "а".."я"
-        def number = 1 .. 10
+        // диапазон интов
+        def integers = 1 .. 10
+        // диапазон дат
+        def dateRange = Date.parse("yyyy-MM-dd", "2023-05-01") .. Date.parse("yyyy-MM-dd", "2023-05-22")
         expect:
-        list.size() == 3
-        list[0] == 123
         letters[2] == 'в'
         letters.size() == 32
-        number.size() == 10
+        integers.size() == 10
+        dateRange.size() == 22
     }
 }

@@ -20,6 +20,7 @@ public class FunctionalInterfaceTest {
         numbers.add(-1);
     }
 
+    // создал свой функциональный интерфейс - MyPredicate, реализовал через лямбду и применил в фильтре стрима
     @Test
     public void functionalInterfaceTest() {
         MyPredicate myPredicate = x -> x > 0;

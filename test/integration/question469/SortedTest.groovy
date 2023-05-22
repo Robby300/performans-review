@@ -18,18 +18,20 @@ class SortedTest extends IntegrationSpec {
                 .sorted({ animal1, animal2 -> animal1.age - animal2.age })
                 .collect(Collectors.toList())
         then:
-        sortedByAge[0].age < sortedByAge[1].age
-        sortedByAge[1].age < sortedByAge[2].age
+        sortedByAge[0].age <= sortedByAge[1].age
+        sortedByAge[1].age <= sortedByAge[2].age
+        sortedByAge[2].age <= sortedByAge[3].age
     }
-    // сортировка по убыванию с помощью Integer.compare
+    // сортировка по возрастанию с помощью Integer.compare
     void shouldSortByAgeUsingInteger() {
         when:
         def sortedByAge = animals.stream()
                 .sorted({animal1, animal2 -> Integer.compare(animal1.age, animal2.age)})
                 .collect(Collectors.toList())
         then:
-        sortedByAge[0].age > sortedByAge[1].age
-        sortedByAge[1].age > sortedByAge[2].age
+        sortedByAge[0].age <= sortedByAge[1].age
+        sortedByAge[1].age <= sortedByAge[2].age
+        sortedByAge[2].age <= sortedByAge[3].age
     }
 
     // сортировка по алфавиту лексикографически

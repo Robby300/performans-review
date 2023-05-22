@@ -17,6 +17,8 @@ public class SerializableTest {
         employee.setNumber(1);
     }
 
+
+    // сериализую - десериализую Ивана
     @Test
     public void serialisationTest() throws IOException, ClassNotFoundException {
         Serialisator.serialize(employee);
@@ -24,6 +26,7 @@ public class SerializableTest {
         assertEquals(employee, deserializedEmployee);
     }
 
+    // но поменяв serialVersionUID попытка десериализовать  - кинет исключение.
     @Test(expected = InvalidClassException.class)
     public void serialisationTestShouldThrow() throws IOException, ClassNotFoundException {
         Employee deserializedEmployee = (Employee) Serialisator.deserialize();
