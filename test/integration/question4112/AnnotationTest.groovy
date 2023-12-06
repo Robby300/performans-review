@@ -10,20 +10,20 @@ class AnnotationTest extends IntegrationSpec {
     String divide
 
     @Calculate(a = "5", b = "3", action = "**")
-    String grade
+    String power
 
-    void shouldCalculateFifteenAnnotation() {
+    void shouldCalculateFifteen() {
         expect:
         fifteen == "15"
     }
 
-    void shouldCalculateDivideAnnotation() {
+    void shouldCalculateDivide() {
         expect:
         Double.valueOf(divide) - 1.666 < 0.001
     }
 
-    void shouldCalculateGradeAnnotation() {
+    void shouldCalculatePower() {
         expect:
-        grade == "125"
+        power == "125"
     }
 }

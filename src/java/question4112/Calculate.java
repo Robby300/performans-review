@@ -1,9 +1,11 @@
 package question4112;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.*;
 
 @Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+@Documented
+@Inherited
 public @interface Calculate {
     String a();
     String b();
