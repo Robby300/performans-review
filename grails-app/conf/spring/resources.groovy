@@ -3,6 +3,7 @@ import question12.impl.Bird
 import question12.impl.Fish
 import question12.impl.Octopus
 import question12.impl.SwimableBird
+import question4112.CalculateAnnotationBeenPostProcessor
 
 // Place your Spring DSL code here
 beans = {
@@ -46,5 +47,8 @@ beans = {
         weight = 10.5
         age = 5
         isHealthy = true
+    }
+
+    calculateAnnotationBeenPostProcessor(CalculateAnnotationBeenPostProcessor) {
     }
 }
