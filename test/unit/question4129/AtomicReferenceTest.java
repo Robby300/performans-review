@@ -20,7 +20,5 @@ public class AtomicReferenceTest {
         String previous = atomicReference.getAndSet("Здарова!");
         assertEquals(previous, "HelloWorld");
         assertEquals(atomicReference.get(), "Здарова!");
-
-
     }
 }

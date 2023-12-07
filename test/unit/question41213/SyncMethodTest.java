@@ -12,7 +12,6 @@ public class SyncMethodTest {
 
     @Before
     public void init() {
-
         createAndStartCounterThreads(synchronizedBlocksCounter);
         createAndStartCounterThreads(synchronizedMethodsCounter);
         createAndStartCounterThreads(reentrantLockCounter);
@@ -32,11 +31,6 @@ public class SyncMethodTest {
         });
         incrementThread.start();
         decrementThread.start();
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Test
@@ -51,6 +45,11 @@ public class SyncMethodTest {
 
     @Test
     public void reentrantLockCounterShouldCountZero() {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         assertEquals(reentrantLockCounter.getCount(), 1);
     }
 }
